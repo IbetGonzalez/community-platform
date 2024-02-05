@@ -161,6 +161,14 @@ const getCoverImages = (user: IUserPP) => {
   return []
 }
 
+const getMoreThanOneImage  = (user: IUserPP) => {
+  if (user.coverImages.length > 1) {
+    return true
+  }
+
+  return false
+}
+
 export const SpaceProfile = ({ user, docs }: IProps) => {
   const {
     about,
@@ -175,6 +183,7 @@ export const SpaceProfile = ({ user, docs }: IProps) => {
 
   const coverImage = getCoverImages(user)
   const stats = useMemberStatistics(user.userName)
+  const imageBool = getMoreThanOneImage(user)
 
   const userLinks = links.filter(
     (linkItem) =>
@@ -207,7 +216,7 @@ export const SpaceProfile = ({ user, docs }: IProps) => {
           <ImageGallery
             images={formatImagesForGallery(coverImage)}
             hideThumbnails={true}
-            showNextPrevButton={true}
+            showNextPrevButton={imageBool}
           />
         ) : (
           <AspectRatio ratio={24 / 3}>
